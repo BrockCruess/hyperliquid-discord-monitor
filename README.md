@@ -10,6 +10,7 @@ A Python package for monitoring trades and orders on Hyperliquid DEX in real-tim
 - Support for multiple addresses
 - Optional SQLite database storage
 - Callback system for custom notifications
+- Discord bot integration for trade notifications
 - Clean shutdown handling
 - Proper trade type definitions using dataclasses
 
@@ -180,6 +181,74 @@ The silent mode is particularly useful for:
 - Server-side deployments where notifications aren't needed
 
 Note: Silent mode requires a database path to be specified since it's meant for data recording.
+
+## Discord Bot Integration
+
+This package now includes a Discord bot for sending trade notifications to a Discord channel.
+
+### Setup Discord Bot
+
+1. Create a new Discord bot in the [Discord Developer Portal](https://discord.com/developers/applications)
+2. Get your bot token and add it to the `.env` file
+3. Create a channel in your Discord server for receiving notifications
+4. Get the channel ID (right-click on channel → Copy ID) and add it to the `.env` file
+
+### Environment Variables for Discord Bot
+
+Create a `.env` file in your project root with the following variables:
+
+```ini
+# Hyperliquid Monitor Configuration
+MONITORED_ADDRESSES=address1,address2,address3
+DB_PATH=trades.db
+
+# Discord Bot Configuration
+DISCORD_TOKEN=your_discord_bot_token_here
+DISCORD_CHANNEL_ID=your_discord_channel_id_here
+DISCORD_LOG_LEVEL=INFO
+
+# Discord Message Settings (optional)
+# If true, sends all events including order placement and cancellations
+# If false, only sends fill events
+DISCORD_SEND_ALL_EVENTS=false 
+
+# Notification Settings (optional)
+# Set to true to enable @everyone mentions for large trades
+ENABLE_LARGE_TRADE_ALERTS=false
+LARGE_TRADE_THRESHOLD=10000  # USD value for considering a trade "large"
+```
+
+### Running the Discord Bot
+
+After setting up your environment variables, you can run the Discord bot using:
+
+```bash
+# If installed with pip
+python -m hyperliquid_monitor.main
+
+# If installed with poetry
+poetry run hyperliquid-discord
+```
+
+### Discord Bot Features
+
+- Beautiful embeds for each trade with color coding (green for buys, red for sells)
+- Optional notifications for large trades using @everyone mentions
+- Configurable threshold for considering trades as "large"
+- Links to transaction details on Hyperliquid
+- Detailed information including size, price, value, fees, and PnL
+
+### Example Discord Notification
+
+The bot sends formatted messages to your configured Discord channel showing:
+
+- Trade type (FILL, ORDER_PLACED, ORDER_CANCELLED)
+- Asset/coin being traded
+- Trade side (BUY/SELL)
+- Trade size and price
+- USD value of the trade
+- Transaction details and links
+- PnL information for closed positions
 
 ## Development
 
