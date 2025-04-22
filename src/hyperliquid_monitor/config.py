@@ -18,3 +18,6 @@ DISCORD_LOG_LEVEL = os.getenv("DISCORD_LOG_LEVEL", "INFO")
 DISCORD_SEND_ALL_EVENTS = os.getenv("DISCORD_SEND_ALL_EVENTS", "false").lower() == "true"
 ENABLE_LARGE_TRADE_ALERTS = os.getenv("ENABLE_LARGE_TRADE_ALERTS", "false").lower() == "true"
 LARGE_TRADE_THRESHOLD = float(os.getenv("LARGE_TRADE_THRESHOLD", "10000"))
+
+# Network configuration
+TESTNET_MODE = os.getenv("TESTNET_MODE", "false").lower() == "true"
