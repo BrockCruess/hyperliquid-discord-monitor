@@ -277,7 +277,7 @@ class HyperliquidDiscordBot:
                         # Don't add direction field as it's now in the title
                         pass 
                     if trade.tx_hash:
-                        base_url = "https://hyperliquid-testnet.xyz" if TESTNET_MODE else "https://hyperliquid.xyz"
+                        base_url = "https://app.hyperliquid-testnet.xyz" if TESTNET_MODE else "https://app.hyperliquid.xyz"
                         tx_url = f"{base_url}/explorer/tx/{trade.tx_hash}"
                         embed.add_field(name="Transaction", value=f"[View]({tx_url})", inline=True)
                 # Add order ID for order events
